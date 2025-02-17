@@ -1,65 +1,104 @@
 
 (kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)
-  (symbol "TEENSY_4.1" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
-    (property "Reference" "IC" (id 0) (at 49.53 7.62 0)
-      (effects (font (size 1.27 1.27)) (justify left))
+  (symbol "DEV-16771" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+    (property "Reference" "U" (id 0) (at -15.24 52.07 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
     )
-    (property "Value" "TEENSY_4.1" (id 1) (at 49.53 5.08 0)
-      (effects (font (size 1.27 1.27)) (justify left))
+    (property "Value" "DEV-16771" (id 1) (at -15.24 -53.34 0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
     )
-    (property "Footprint" "TEENSY_4.1:TEENSY41" (id 2) (at 0 0 0)
+    (property "Footprint" "DEV-16771:MODULE_DEV-16771" (id 2) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Manufacturer_Name" "PJRC" (id 4) (at 0 0 0)
+    (property "MF" "SparkFun Electronics" (id 4) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "MF" "PJRC" (id 5) (at 0 0 0)
+    (property "MAXIMUM_PACKAGE_HEIGHT" "4.07mm" (id 5) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Mouser_Price-Stock" "" (id 6) (at 0 0 0)
+    (property "Package" "None" (id 6) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Description" "\n                        \n                            \n                        \n" (id 7) (at 0 0 0)
+    (property "Price" "None" (id 7) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Mouser_Part_Number" "" (id 8) (at 0 0 0)
+    (property "Check_prices" "https://www.snapeda.com/parts/DEV-16771/SparkFun/view-part/?ref=eda" (id 8) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Price" "None" (id 9) (at 0 0 0)
+    (property "STANDARD" "Manufacturer recommendations" (id 9) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Package" "None" (id 10) (at 0 0 0)
+    (property "PARTREV" "4.1" (id 10) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Check_prices" "https://www.snapeda.com/parts/Teensy%204.1/PJRC/view-part/?ref=eda" (id 11) (at 0 0 0)
+    (property "SnapEDA_Link" "https://www.snapeda.com/parts/DEV-16771/SparkFun/view-part/?ref=snap" (id 11) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Height" "mm" (id 12) (at 0 0 0)
+    (property "MP" "DEV-16771" (id 12) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "MP" "Teensy 4.1" (id 13) (at 0 0 0)
+    (property "Description" "\n                        \n                            RT1062 Teensy 4.1 series ARM® Cortex®-M7 MPU Embedded Evaluation Board\n                        \n" (id 13) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "SnapEDA_Link" "https://www.snapeda.com/parts/Teensy%204.1/PJRC/view-part/?ref=snap" (id 14) (at 0 0 0)
+    (property "Availability" "In Stock" (id 14) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Arrow_Price-Stock" "" (id 15) (at 0 0 0)
+    (property "MANUFACTURER" "SparkFun Electronics" (id 15) (at 0 0 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
-    (property "Arrow_Part_Number" "" (id 16) (at 0 0 0)
-      (effects (font (size 1.27 1.27)) (justify bottom) hide)
-    )
-    (property "Availability" "Not in stock" (id 17) (at 0 0 0)
-      (effects (font (size 1.27 1.27)) (justify bottom) hide)
-    )
-    (property "Manufacturer_Part_Number" "TEENSY 4.1" (id 18) (at 0 0 0)
-      (effects (font (size 1.27 1.27)) (justify bottom) hide)
-    )
-    (symbol "TEENSY_4.1_0_0"
-      (rectangle (start 5.08 -76.2) (end 48.26 2.54)
+    (symbol "DEV-16771_0_0"
+      (rectangle (start -15.24 -50.8) (end 15.24 50.8)
         (stroke (width 0.254)) (fill (type background))
       )
-      (pin bidirectional line (at 0.0 0.0 0) (length 5.08)
+      (pin power_in line (at 20.32 -45.72 180.0) (length 5.08)
+        (name "GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GND1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 -45.72 180.0) (length 5.08)
+        (name "GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GND2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 -45.72 180.0) (length 5.08)
+        (name "GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GND3"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 -45.72 180.0) (length 5.08)
+        (name "GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GND4"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 -45.72 180.0) (length 5.08)
+        (name "GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "GND5"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at -20.32 20.32 0) (length 5.08)
+        (name "RX1"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "0"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at -20.32 17.78 0) (length 5.08)
         (name "TX1"
           (effects (font (size 1.016 1.016)))
         )
@@ -67,7 +106,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -2.54 0) (length 5.08)
+      (pin output line (at 20.32 12.7 180.0) (length 5.08)
         (name "OUT2"
           (effects (font (size 1.016 1.016)))
         )
@@ -75,7 +114,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -5.08 0) (length 5.08)
+      (pin bidirectional clock (at -20.32 -7.62 0) (length 5.08)
         (name "LRCLK2"
           (effects (font (size 1.016 1.016)))
         )
@@ -83,7 +122,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -7.62 0) (length 5.08)
+      (pin bidirectional clock (at -20.32 -10.16 0) (length 5.08)
         (name "BCLK2"
           (effects (font (size 1.016 1.016)))
         )
@@ -91,7 +130,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -10.16 0) (length 5.08)
+      (pin bidirectional line (at -20.32 33.02 0) (length 5.08)
         (name "IN2"
           (effects (font (size 1.016 1.016)))
         )
@@ -99,7 +138,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -12.7 0) (length 5.08)
+      (pin output line (at 20.32 10.16 180.0) (length 5.08)
         (name "OUT1D"
           (effects (font (size 1.016 1.016)))
         )
@@ -107,7 +146,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -15.24 0) (length 5.08)
+      (pin bidirectional line (at -20.32 15.24 0) (length 5.08)
         (name "RX2"
           (effects (font (size 1.016 1.016)))
         )
@@ -115,7 +154,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -17.78 0) (length 5.08)
+      (pin bidirectional line (at -20.32 12.7 0) (length 5.08)
         (name "TX2"
           (effects (font (size 1.016 1.016)))
         )
@@ -123,7 +162,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -20.32 0) (length 5.08)
+      (pin output line (at 20.32 7.62 180.0) (length 5.08)
         (name "OUT1C"
           (effects (font (size 1.016 1.016)))
         )
@@ -131,15 +170,15 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -22.86 0) (length 5.08)
-        (name "CS_1"
+      (pin bidirectional line (at 20.32 -5.08 180.0) (length 5.08)
+        (name "CS1"
           (effects (font (size 1.016 1.016)))
         )
         (number "10"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -25.4 0) (length 5.08)
+      (pin bidirectional line (at 20.32 -12.7 180.0) (length 5.08)
         (name "MOSI"
           (effects (font (size 1.016 1.016)))
         )
@@ -147,7 +186,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -27.94 0) (length 5.08)
+      (pin bidirectional line (at 20.32 -10.16 180.0) (length 5.08)
         (name "MISO"
           (effects (font (size 1.016 1.016)))
         )
@@ -155,7 +194,31 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -30.48 0) (length 5.08)
+      (pin power_in line (at 20.32 45.72 180.0) (length 5.08)
+        (name "3.3V"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "3.3V_1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 45.72 180.0) (length 5.08)
+        (name "3.3V"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "3.3V_2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 45.72 180.0) (length 5.08)
+        (name "3.3V"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "3.3V_3"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional clock (at -20.32 -15.24 0) (length 5.08)
         (name "SCK"
           (effects (font (size 1.016 1.016)))
         )
@@ -163,7 +226,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -33.02 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -20.32 0) (length 5.08)
         (name "A0"
           (effects (font (size 1.016 1.016)))
         )
@@ -171,7 +234,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -35.56 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -22.86 0) (length 5.08)
         (name "A1"
           (effects (font (size 1.016 1.016)))
         )
@@ -179,7 +242,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -38.1 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -25.4 0) (length 5.08)
         (name "A2"
           (effects (font (size 1.016 1.016)))
         )
@@ -187,7 +250,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -40.64 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -27.94 0) (length 5.08)
         (name "A3"
           (effects (font (size 1.016 1.016)))
         )
@@ -195,7 +258,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -43.18 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -30.48 0) (length 5.08)
         (name "A4"
           (effects (font (size 1.016 1.016)))
         )
@@ -203,7 +266,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -45.72 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -33.02 0) (length 5.08)
         (name "A5"
           (effects (font (size 1.016 1.016)))
         )
@@ -211,7 +274,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -48.26 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -35.56 0) (length 5.08)
         (name "A6"
           (effects (font (size 1.016 1.016)))
         )
@@ -219,7 +282,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -50.8 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -38.1 0) (length 5.08)
         (name "A7"
           (effects (font (size 1.016 1.016)))
         )
@@ -227,7 +290,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -53.34 0) (length 5.08)
+      (pin bidirectional line (at -20.32 -40.64 0) (length 5.08)
         (name "A8"
           (effects (font (size 1.016 1.016)))
         )
@@ -235,7 +298,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -55.88 0) (length 5.08)
+      (pin bidirectional line (at 20.32 -40.64 180.0) (length 5.08)
         (name "A9"
           (effects (font (size 1.016 1.016)))
         )
@@ -243,7 +306,15 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -58.42 0) (length 5.08)
+      (pin input line (at -20.32 35.56 0) (length 5.08)
+        (name "VIN"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "VIN"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 -38.1 180.0) (length 5.08)
         (name "A10"
           (effects (font (size 1.016 1.016)))
         )
@@ -251,7 +322,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -60.96 0) (length 5.08)
+      (pin bidirectional line (at 20.32 -35.56 180.0) (length 5.08)
         (name "A11"
           (effects (font (size 1.016 1.016)))
         )
@@ -259,7 +330,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -63.5 0) (length 5.08)
+      (pin bidirectional line (at 20.32 -33.02 180.0) (length 5.08)
         (name "A12"
           (effects (font (size 1.016 1.016)))
         )
@@ -267,7 +338,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -66.04 0) (length 5.08)
+      (pin bidirectional line (at 20.32 -30.48 180.0) (length 5.08)
         (name "A13"
           (effects (font (size 1.016 1.016)))
         )
@@ -275,7 +346,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -68.58 0) (length 5.08)
+      (pin bidirectional line (at -20.32 10.16 0) (length 5.08)
         (name "RX7"
           (effects (font (size 1.016 1.016)))
         )
@@ -283,7 +354,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -71.12 0) (length 5.08)
+      (pin bidirectional line (at -20.32 7.62 0) (length 5.08)
         (name "TX7"
           (effects (font (size 1.016 1.016)))
         )
@@ -291,7 +362,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 0.0 -73.66 0) (length 5.08)
+      (pin bidirectional line (at -20.32 0.0 0) (length 5.08)
         (name "CRX3"
           (effects (font (size 1.016 1.016)))
         )
@@ -299,7 +370,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 0.0 180.0) (length 5.08)
+      (pin bidirectional line (at -20.32 -2.54 0) (length 5.08)
         (name "CTX3"
           (effects (font (size 1.016 1.016)))
         )
@@ -307,7 +378,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -2.54 180.0) (length 5.08)
+      (pin output line (at 20.32 5.08 180.0) (length 5.08)
         (name "OUT1B"
           (effects (font (size 1.016 1.016)))
         )
@@ -315,7 +386,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -5.08 180.0) (length 5.08)
+      (pin bidirectional clock (at -20.32 -12.7 0) (length 5.08)
         (name "MCLK2"
           (effects (font (size 1.016 1.016)))
         )
@@ -323,7 +394,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -7.62 180.0) (length 5.08)
+      (pin bidirectional line (at -20.32 5.08 0) (length 5.08)
         (name "RX8"
           (effects (font (size 1.016 1.016)))
         )
@@ -331,7 +402,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -10.16 180.0) (length 5.08)
+      (pin bidirectional line (at -20.32 2.54 0) (length 5.08)
         (name "TX8"
           (effects (font (size 1.016 1.016)))
         )
@@ -339,23 +410,23 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -12.7 180.0) (length 5.08)
-        (name "CS_2"
+      (pin bidirectional line (at 20.32 -2.54 180.0) (length 5.08)
+        (name "CS2"
           (effects (font (size 1.016 1.016)))
         )
         (number "36"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -15.24 180.0) (length 5.08)
-        (name "CS_3"
+      (pin bidirectional line (at 20.32 0.0 180.0) (length 5.08)
+        (name "CS3"
           (effects (font (size 1.016 1.016)))
         )
         (number "37"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -17.78 180.0) (length 5.08)
+      (pin bidirectional line (at 20.32 -27.94 180.0) (length 5.08)
         (name "A14"
           (effects (font (size 1.016 1.016)))
         )
@@ -363,7 +434,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -20.32 180.0) (length 5.08)
+      (pin bidirectional line (at 20.32 -25.4 180.0) (length 5.08)
         (name "A15"
           (effects (font (size 1.016 1.016)))
         )
@@ -371,7 +442,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -22.86 180.0) (length 5.08)
+      (pin bidirectional line (at 20.32 -22.86 180.0) (length 5.08)
         (name "A16"
           (effects (font (size 1.016 1.016)))
         )
@@ -379,7 +450,7 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -25.4 180.0) (length 5.08)
+      (pin bidirectional line (at 20.32 -20.32 180.0) (length 5.08)
         (name "A17"
           (effects (font (size 1.016 1.016)))
         )
@@ -387,147 +458,115 @@
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -27.94 180.0) (length 5.08)
-        (name "3.3V_1"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "42"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -30.48 180.0) (length 5.08)
-        (name "VBAT"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "43"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -33.02 180.0) (length 5.08)
-        (name "3.3V_2"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "44"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -35.56 180.0) (length 5.08)
-        (name "GND_1"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "45"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -38.1 180.0) (length 5.08)
-        (name "PROGRAM"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "46"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -40.64 180.0) (length 5.08)
+      (pin bidirectional line (at -20.32 25.4 0) (length 5.08)
         (name "ON/OFF"
           (effects (font (size 1.016 1.016)))
         )
-        (number "47"
+        (number "ON/OFF"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -43.18 180.0) (length 5.08)
-        (name "GND_2"
+      (pin bidirectional line (at -20.32 27.94 0) (length 5.08)
+        (name "PROGRAM"
           (effects (font (size 1.016 1.016)))
         )
-        (number "48"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -45.72 180.0) (length 5.08)
-        (name "GND_3"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "49"
+        (number "PROGRAM"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -48.26 180.0) (length 5.08)
-        (name "D+"
+      (pin passive line (at 20.32 40.64 180.0) (length 5.08)
+        (name "VBAT"
           (effects (font (size 1.016 1.016)))
         )
-        (number "50"
+        (number "VBAT"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -50.8 180.0) (length 5.08)
+      (pin power_in line (at 20.32 48.26 180.0) (length 5.08)
+        (name "5V"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "5V"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 17.78 180.0) (length 5.08)
         (name "D-"
           (effects (font (size 1.016 1.016)))
         )
-        (number "51"
+        (number "D-"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -53.34 180.0) (length 5.08)
-        (name "+5V"
+      (pin bidirectional line (at 20.32 20.32 180.0) (length 5.08)
+        (name "D+"
           (effects (font (size 1.016 1.016)))
         )
-        (number "52"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -55.88 180.0) (length 5.08)
-        (name "3.3V_(250_M_A_MAX)"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "53"
+        (number "D+"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -58.42 180.0) (length 5.08)
-        (name "VIN_(3.6_TO_5.5_VOLTS)"
+      (pin power_in line (at 20.32 -48.26 180.0) (length 5.08)
+        (name "USB_GND"
           (effects (font (size 1.016 1.016)))
         )
-        (number "55"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -60.96 180.0) (length 5.08)
-        (name "RX1"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "57"
+        (number "USB_GND1"
           (effects (font (size 1.016 1.016)))
         )
       )
-      (pin bidirectional line (at 53.34 -63.5 180.0) (length 5.08)
+      (pin power_in line (at 20.32 -48.26 180.0) (length 5.08)
+        (name "USB_GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "USB_GND2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 25.4 180.0) (length 5.08)
+        (name "R+"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "R+"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 27.94 180.0) (length 5.08)
+        (name "R-"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "R-"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 30.48 180.0) (length 5.08)
+        (name "T+"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "T+"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 33.02 180.0) (length 5.08)
+        (name "T-"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "T-"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin bidirectional line (at 20.32 35.56 180.0) (length 5.08)
+        (name "LED"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "LED"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin passive line (at 20.32 43.18 180.0) (length 5.08)
         (name "VUSB"
           (effects (font (size 1.016 1.016)))
         )
-        (number "68"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -66.04 180.0) (length 5.08)
-        (name "GND_4"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "69"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -68.58 180.0) (length 5.08)
-        (name "GND_5"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "70"
-          (effects (font (size 1.016 1.016)))
-        )
-      )
-      (pin bidirectional line (at 53.34 -71.12 180.0) (length 5.08)
-        (name "GND_6"
-          (effects (font (size 1.016 1.016)))
-        )
-        (number "71"
+        (number "VUSB"
           (effects (font (size 1.016 1.016)))
         )
       )
