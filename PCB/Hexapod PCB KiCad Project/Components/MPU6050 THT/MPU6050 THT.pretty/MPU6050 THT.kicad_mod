@@ -55,4 +55,9 @@
   (pad "6" thru_hole circle (at -6.222 -8.89 90) (size 1.5 1.5) (drill 0.8) (layers "*.Cu" "*.Mask") (tstamp e9fe5ebe-9830-4905-9c10-f2c654e977ee))
   (pad "7" thru_hole circle (at -6.222 -6.35 90) (size 1.5 1.5) (drill 0.8) (layers "*.Cu" "*.Mask") (tstamp e8e9c0ea-0635-4e75-a599-e3834ec7d32f))
   (pad "8" thru_hole circle (at -6.222 -3.81 90) (size 1.5 1.5) (drill 0.8) (layers "*.Cu" "*.Mask") (tstamp a3016a3a-219a-4a57-815a-a19c7ade1931))
+  (model "${KIPRJMOD}/Components/MPU6050 THT/MPU6050.stp"
+    (offset (xyz -16.1 5.55 -7.5))
+    (scale (xyz 1 1 1))
+    (rotate (xyz -90 0 -90))
+  )
 )
