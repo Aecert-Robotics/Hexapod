@@ -34,9 +34,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.5,
-          "height": 0.85,
-          "width": 0.85
+          "drill": 3.2,
+          "height": 3.2,
+          "width": 3.2
         },
         "silk_line_width": 0.15,
         "silk_text_italic": false,
@@ -391,7 +391,12 @@
     "pinned_footprint_libs": [
       "Connector_PinHeader_1.00mm"
     ],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "Teensy 4.1",
+      "Voltage Regulator LM2596",
+      "Power Terminal 2 Pin",
+      "MPU6050 THT"
+    ]
   },
   "meta": {
     "filename": "Hexapod PCB KiCad Project.kicad_pro",
@@ -473,6 +478,30 @@
     [
       "55308d4e-8005-4344-88fa-e9149757c1fd",
       ""
+    ],
+    [
+      "50b45e52-3dc5-4b44-ac76-89d0a21a0c01",
+      "Leg 1"
+    ],
+    [
+      "ecec22b4-9708-4564-b944-a2a2a8ec580f",
+      "Leg 2"
+    ],
+    [
+      "64ba9eee-1de7-4ed5-809f-3e6bab105923",
+      "Leg 3"
+    ],
+    [
+      "9008ff35-f48d-43a0-8ef3-d1c49a9cb0c0",
+      "Leg 4"
+    ],
+    [
+      "059d42e5-5a73-4bd5-a346-feb4dd2c71e4",
+      "Leg 5"
+    ],
+    [
+      "efed6682-a9f2-4b0f-80cc-97ecacc1acb6",
+      "Leg 6"
     ]
   ],
   "text_variables": {}
