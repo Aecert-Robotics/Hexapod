@@ -6,4 +6,5 @@
   (lib (name "New_Library")(type "KiCad")(uri "${KIPRJMOD}/Components/Male Pin Header 1x3/New_Library.kicad_sym")(options "")(descr ""))
   (lib (name "Pin Header Male 1x3")(type "KiCad")(uri "${KIPRJMOD}/Components/Male Pin Header 1x3/Pin Header Male 1x3.kicad_sym")(options "")(descr ""))
   (lib (name "MPU6050 THT")(type "KiCad")(uri "${KIPRJMOD}/Components/MPU6050 THT/MPU6050 THT.kicad_sym")(options "")(descr ""))
+  (lib (name "Buck Converter 5v MP1584EN")(type "KiCad")(uri "${KIPRJMOD}/Components/Buck Converter 5V MP1584EN/Buck Converter 5v MP1584EN.kicad_sym")(options "")(descr ""))
 )

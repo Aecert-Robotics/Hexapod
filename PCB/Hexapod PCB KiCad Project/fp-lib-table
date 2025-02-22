@@ -4,4 +4,5 @@
   (lib (name "Teensy 4.1")(type "KiCad")(uri "${KIPRJMOD}/Components/TEENSY 4.1")(options "")(descr ""))
   (lib (name "Voltage Regulator LM2596")(type "KiCad")(uri "${KIPRJMOD}/Components/Voltage Regulator LM2596/Voltage Regulator LM2596.pretty")(options "")(descr ""))
   (lib (name "MPU6050 THT")(type "KiCad")(uri "${KIPRJMOD}/Components/MPU6050 THT/MPU6050 THT.pretty")(options "")(descr ""))
+  (lib (name "Buck Converter 5V MP1584EN")(type "KiCad")(uri "${KIPRJMOD}/Components/Buck Converter 5V MP1584EN/Buck Converter 5V MP1584EN.pretty")(options "")(descr ""))
 )
