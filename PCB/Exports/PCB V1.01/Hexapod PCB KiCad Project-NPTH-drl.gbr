@@ -1,0 +1,27 @@
+%TF.GenerationSoftware,KiCad,Pcbnew,7.0.8*%
+%TF.CreationDate,2025-03-22T19:36:14-04:00*%
+%TF.ProjectId,Hexapod PCB KiCad Project,48657861-706f-4642-9050-4342204b6943,rev?*%
+%TF.SameCoordinates,Original*%
+%TF.FileFunction,NonPlated,1,4,NPTH,Drill*%
+%TF.FilePolarity,Positive*%
+%FSLAX46Y46*%
+G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
+G04 Created by KiCad (PCBNEW 7.0.8) date 2025-03-22 19:36:14*
+%MOMM*%
+%LPD*%
+G01*
+G04 APERTURE LIST*
+%TA.AperFunction,ComponentDrill*%
+%ADD10C,3.200000*%
+%TD*%
+G04 APERTURE END LIST*
+D10*
+%TO.C,H2*%
+X119640000Y-66040000D03*
+%TO.C,H1*%
+X119640001Y-137202000D03*
+%TO.C,H4*%
+X167640000Y-66039999D03*
+%TO.C,H3*%
+X167640000Y-137202000D03*
+M02*
