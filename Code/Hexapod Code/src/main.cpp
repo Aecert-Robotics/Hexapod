@@ -1,18 +1,28 @@
 #include <Arduino.h>
+#include "Utils.h"
+#include "LegManager.h"
+#include "State.h"
+#include "Config.h"
 
-// put function declarations here:
-int myFunction(int, int);
+State *currentState = nullptr;
+State *previousState = nullptr;
+
+InitializationState *initializationState = new InitializationState();
+SleepState *sleepState = new SleepState();
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
+  attachServos();
+  currentState = initializationState;
+  currentState->init();
+
+  currentState = sleepState;
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void loop() {  
+  if (currentState != previousState) {
+    previousState = currentState;
+    currentState->init();
+  }
+  currentState->loop();
 }
