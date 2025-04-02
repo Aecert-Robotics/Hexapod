@@ -3,6 +3,8 @@
 #include <Arduino.h>
 #include "Utils.h"
 
+
+
 class State
 {
 public:
@@ -24,6 +26,24 @@ public:
     void init() override;
 
 private:
-    Vector3 target = Vector3(0, 115, 12);
+    Vector3 target = Vector3(0, 160, 12);
     bool targetReached = false;
 };
+
+class StandingState : public State
+{
+public:
+    void loop() override;
+    void init() override;
+    void set3HighestLeg();
+
+private:
+};
+
+
+extern State *currentState;
+extern State *previousState;
+
+extern InitializationState *initializationState;
+extern SleepState *sleepState;
+extern StandingState *standingState;

@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include "State.h"
 #include "LegManager.h"
+#include "NRF.h"
 
 void SleepState::init(){
   Serial.println("Sleep State.");
@@ -13,6 +14,9 @@ void SleepState::init(){
 void SleepState::loop(){
   //do nothing if all legs have reached the target position
   if(targetReached) return;
+
+  target = Vector3(0, rc_data.potLeft + 100, rc_data.potRight);
+  Serial.println("Target: " + target.toString());
 
   targetReached = true;
   for (int i = 0; i < 6; i++) {
