@@ -2,7 +2,7 @@
 #include "NRF.h"
 #include "Config.h"
 
-int distanceFromGround = -100;
+float distanceFromGround = -100;
 bool gyroTilt = false;
 
 const float smoothingFactor = 0.1; // Adjust this value (0.0 to 1.0)

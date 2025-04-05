@@ -1,7 +1,7 @@
 #pragma once
 #include "Arduino.h"
 
-extern int distanceFromGround;
+extern float distanceFromGround;
 extern bool gyroTilt;
 
 void updateRuntimeVariables();

@@ -38,6 +38,18 @@ public:
     void set3HighestLeg();
 
 private:
+    int points = 1000;
+};
+
+class WalkingState : public State
+{
+public:
+    void loop() override;
+    void init() override;
+    Vector3 getGaitPoint(int leg, float pushFraction);
+
+private:
+    int points = 1000;
 };
 
 
@@ -47,3 +59,4 @@ extern State *previousState;
 extern InitializationState *initializationState;
 extern SleepState *sleepState;
 extern StandingState *standingState;
+extern WalkingState *walkingState;

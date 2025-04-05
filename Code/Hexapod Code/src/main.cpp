@@ -9,12 +9,10 @@
 InitializationState *initializationState = new InitializationState();
 SleepState *sleepState = new SleepState();
 StandingState *standingState = new StandingState();
+WalkingState *walkingState = new WalkingState();
 
 State *currentState = nullptr;
 State *previousState = nullptr;
-
-const unsigned long loopFrequency = 100; // Hz (adjust as needed)
-const unsigned long loopPeriod = 1000000 / loopFrequency; // microseconds
 
 unsigned long previousLoopTime = 0;
 
@@ -26,29 +24,53 @@ void setup() {
   currentState = initializationState;
   currentState->init();
 
-  currentState = sleepState;
+  currentState = standingState;
 }
 
 void loop() {
   unsigned long currentLoopTime = micros();
   unsigned long loopElapsedTime = currentLoopTime - previousLoopTime;
 
-  if (loopElapsedTime >= loopPeriod) {
-    previousLoopTime = currentLoopTime;
-
-    receiveNRFData();
-    updateRuntimeVariables();
-
-    if (currentState != previousState) {
-      previousState = currentState;
-      currentState->init();
-    }
-    currentState->loop();
+  // Return if the loop has not elapsed enough time
+  if (loopElapsedTime < loopPeriod)return;
 
 
-    if (!rc_data.button_A) {
+  previousLoopTime = currentLoopTime;
+
+  receiveNRFData();
+  updateRuntimeVariables();
+
+  //If the state has changed, call the init function of the new state
+  if (currentState != previousState) {
+    currentState->init();
+    previousState = currentState;    
+  }
+  currentState->loop();
+
+
+  // state manager
+  static unsigned long lastMovementTime = 0;
+
+  double joy1x = map(rc_data.joyLeft_X, 0, 254, -100, 100);
+  double joy1y = map(rc_data.joyLeft_Y, 0, 254, -100, 100);
+
+  double joy2x = map(rc_data.joyRight_X, 0, 254, -100, 100);
+  double joy2y = map(rc_data.joyRight_Y, 0, 254, -100, 100);
+
+  bool movementDetected = abs(joy1x) > 10 || abs(joy1y) > 10 || abs(joy2x) > 10 || abs(joy2y) > 10;
+
+  if (movementDetected) {
+    lastMovementTime = millis();
+    if (currentState == sleepState) {
       currentState = standingState;
-    } else if (!rc_data.button_B) {
+    } else if (currentState != walkingState) {
+      currentState = walkingState;
+    }
+  } else {
+    unsigned long timeSinceLastMovement = millis() - lastMovementTime;
+    if (currentState != sleepState && timeSinceLastMovement >= 3000 && timeSinceLastMovement < 6000) {
+      currentState = standingState;
+    } else if (timeSinceLastMovement >= 6000 && currentState != sleepState) {
       currentState = sleepState;
     }
   }

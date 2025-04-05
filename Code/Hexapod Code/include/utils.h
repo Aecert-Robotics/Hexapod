@@ -66,4 +66,7 @@ Vector3 lerp(Vector3 a, Vector3 b, float f);
 float calculateHypotenuse(float x, float y);
 float mapFloat(float x, float in_min, float in_max, float out_min, float out_max);
 
+void print_value(String name, float value, bool newLine);
+void print_value(String name, String value, bool newLine);
+void print_value(String name, Vector3 value, bool newLine);
 
