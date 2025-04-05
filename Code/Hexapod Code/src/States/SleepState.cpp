@@ -15,8 +15,8 @@ void SleepState::loop(){
   //do nothing if all legs have reached the target position
   if(targetReached) return;
 
-  target = Vector3(0, rc_data.potLeft + 100, rc_data.potRight);
-  Serial.println("Target: " + target.toString());
+  //target = Vector3(0, rc_data.potLeft + 100, rc_data.potRight-50);
+  //Serial.println("Target: " + target.toString());
 
   targetReached = true;
   for (int i = 0; i < 6; i++) {

@@ -21,3 +21,8 @@ const float TIBIA_BASE_OFFSET = 0;
 
 const float strideMultiplier[6] = {1, 1, 1, -1, -1, -1};
 const float rotationMultiplier[6] = {-1, 0, 1, -1, 0 , 1};
+
+const float distanceFromHexapodBottomToFemurJoint = 40;
+const float maxDistanceFromGround = 200;
+
+const Vector3 baseLegConfigurationPosition = Vector3(0, 220, 100);

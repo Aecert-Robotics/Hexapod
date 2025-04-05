@@ -26,7 +26,7 @@ public:
     void init() override;
 
 private:
-    Vector3 target = Vector3(0, 160, 12);
+    Vector3 target = Vector3(0, 120, -20);
     bool targetReached = false;
 };
 

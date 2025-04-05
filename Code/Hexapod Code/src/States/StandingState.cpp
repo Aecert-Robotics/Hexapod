@@ -3,6 +3,7 @@
 #include "State.h"
 #include "LegManager.h"
 #include "NRF.h"
+#include "RuntimeVariables.h"
 
 //Standing Control Points Array
 Vector3 SCPA[6][10];
@@ -19,9 +20,10 @@ int standProgress = 0;
 bool moveAllAtOnce = false;
 bool highLift = false;
 
+
 void StandingState::init(){
   Serial.println("Standing State.");
-
+  if (previousState == sleepState) moveAllAtOnce = true;
   set3HighestLeg();
   standLoops = 0;
   standProgress = 0;
@@ -43,15 +45,14 @@ void StandingState::init(){
     SCPA[i][1] = standingInBetweenPoints[i];
     SCPA[i][2] = standingEndPoint;
   }
-
 }
 
 void StandingState::loop() {  
-  Vector3 standingEndPoint = Vector3(0, 180, -100);
+  standingEndPoint = Vector3(0, 180, distanceFromGround);  
   Serial.println("Standing End Point: " + standingEndPoint.toString());
   standLoops = 2;
 
-  if (previousState == sleepState) moveAllAtOnce = true;
+  
 
   //update distance from ground constantly
   for (int i = 0; i < 6; i++) {
@@ -99,6 +100,8 @@ void StandingState::loop() {
   }
   return;
 }
+
+
 
 void StandingState::set3HighestLeg() {
 
