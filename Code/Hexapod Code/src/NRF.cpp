@@ -2,65 +2,155 @@
 #include <NRF.h>
 
 uint8_t address[6] = "HEX01";
-RC_Data_Package rc_data;
-Ack_Data_Package ack_data;
+
+// Declare the data package variables
+RC_Control_Data_Package rc_control_data;
+RC_Settings_Data_Package rc_settings_data;
+Hexapod_Settings_Data_Package hex_settings_data;
+Hexapod_Sensor_Data_Package hex_sensor_data;
 
 #define CE_PIN 26
 #define CSN_PIN 27
 #define INTERVAL_MS_SIGNAL_LOST 1000
 #define INTERVAL_MS_SIGNAL_RETRY 250
+unsigned long rc_last_received_time = 0;
+
 RF24 radio(CE_PIN, CSN_PIN);
 
 unsigned long lastSignalMillis = 0;
 void setupNRF()
 {
-    ack_data.connected = 1;
-    radio.begin();
-    radio.setDataRate(RF24_250KBPS);
+    if (!radio.begin())
+    {
+        Serial.println(F("radio hardware is not responding!!"));
+        while (1)
+        {
+        } // hold in infinite loop
+    }
+    else
+    {
+        Serial.println(F("radio hardware is ready!"));
+    }
+
+    radio.setAddressWidth(5);
+    radio.setPALevel(RF24_PA_LOW);
+    radio.setPayloadSize(32); // Set the payload size to the maximum of 32 bytes
+    radio.setChannel(124);
     radio.openReadingPipe(1, address);
     radio.enableAckPayload();
     radio.startListening();
+
+    initializeHexPayload();
+    initializeControllerPayload();
+
+    radio.writeAckPayload(1, &hex_sensor_data, sizeof(hex_sensor_data));
 }
-void receiveNRFData()
+
+void initializeHexPayload()
 {
-    radio.writeAckPayload(1, &ack_data, sizeof(ack_data));
+    hex_sensor_data.type = HEXAPOD_SENSOR_DATA;
 
-    unsigned long currentMillis = millis();
-    if (radio.available() > 0)
+    hex_settings_data.type = HEXAPOD_SETTINGS_DATA;
+    Serial.println("Filling hex_settings_data.calibrationOffsets with 0's.");
+    for (int i = 0; i < 18; i++)
     {
-        radio.read(&rc_data, sizeof(rc_data));
-        lastSignalMillis = currentMillis;
-    }
-
-    // RC_DisplayData();
-
-    if (currentMillis - lastSignalMillis > INTERVAL_MS_SIGNAL_LOST)
-    {
-        Serial.println("We have lost connection, preventing unwanted behavior");
-        delay(INTERVAL_MS_SIGNAL_RETRY);
+        hex_settings_data.calibrationOffsets[i] = 0;
     }
 }
 
-void RC_DisplayData()
+void initializeControllerPayload()
 {
-    Serial.println("JLX: " + String(rc_data.joyLeft_X) +
-                   "  JLY: " + String(rc_data.joyLeft_Y) +
-                   "  JRX: " + String(rc_data.joyRight_X) +
-                   "  JRY: " + String(rc_data.joyRight_Y) +
-                   "  JLB: " + String(rc_data.joyLeft_Button) +
-                   "  JRB: " + String(rc_data.joyRight_Button) +
-                   "  PL: " + String(rc_data.potLeft) +
-                   "  PR: " + String(rc_data.potRight) +
-                   "  BA: " + String(rc_data.button_A) +
-                   "  BB: " + String(rc_data.button_B) +
-                   "  BC: " + String(rc_data.button_C) +
-                   "  BD: " + String(rc_data.button_D) +
-                   "  TA: " + String(rc_data.toggle_A) +
-                   "  TB: " + String(rc_data.toggle_B) +
-                   "  TC: " + String(rc_data.toggle_C) +
-                   "  TD: " + String(rc_data.toggle_D) +
-                   "  BA: " + String(rc_data.bumper_A) +
-                   "  BB: " + String(rc_data.bumper_B) +
-                   "  BC: " + String(rc_data.bumper_C) +
-                   "  BD: " + String(rc_data.bumper_D));
+
+    // control package
+    rc_control_data.type = RC_CONTROL_DATA;
+
+    rc_control_data.joyLeft_X = 127;
+    rc_control_data.joyLeft_Y = 127;
+    rc_control_data.joyRight_X = 127;
+    rc_control_data.joyRight_Y = 127;
+    rc_control_data.potLeft = 50;
+    rc_control_data.potRight = 50;
+    rc_control_data.button_A = UNPRESSED;
+    rc_control_data.button_B = UNPRESSED;
+    rc_control_data.button_C = UNPRESSED;
+    rc_control_data.button_D = UNPRESSED;
+    rc_control_data.toggle_A = OFF;
+    rc_control_data.toggle_B = OFF;
+    rc_control_data.toggle_C = OFF;
+    rc_control_data.toggle_D = OFF;
+    rc_control_data.bumper_A = UNPRESSED;
+    rc_control_data.bumper_B = UNPRESSED;
+    rc_control_data.bumper_C = UNPRESSED;
+    rc_control_data.bumper_D = UNPRESSED;
+    rc_control_data.joyLeft_Button = UNPRESSED;
+    rc_control_data.joyRight_Button = UNPRESSED;
+    rc_control_data.gait = 0;
+
+    // settings package
+    rc_settings_data.type = RC_SETTINGS_DATA;
+    rc_settings_data.calibrating = 0;
+    rc_settings_data.increaseValue = UNPRESSED;
+    rc_settings_data.decreaseValue = UNPRESSED;
+    rc_settings_data.calibrationIndex = -1; // -1 means no calibration index is set
+}
+
+byte receiveType = RC_CONTROL_DATA;
+
+bool receiveNRFData()
+{
+    // This device is a RX node
+    uint8_t pipe;
+    if (radio.available(&pipe))
+    {
+        byte incomingType;
+        radio.read(&incomingType, sizeof(incomingType));
+        if (receiveType != incomingType && incomingType != 0){
+            receiveType = incomingType;
+            if (receiveType == RC_CONTROL_DATA)
+            {
+                Serial.println("Receiving CONTROL");
+                Serial.println("Sending SENSOR");
+            }
+            else if (receiveType == RC_SETTINGS_DATA)
+            {
+                Serial.println("Receiving SETTINGS");
+                Serial.println("Sending SETTINGS");
+            }
+        }
+            
+
+        if (receiveType == RC_CONTROL_DATA)
+        {
+            radio.read(&rc_control_data, sizeof(rc_control_data)); 
+            radio.writeAckPayload(1, &hex_sensor_data, sizeof(hex_sensor_data)); // load the payload for the next time
+            //print the hex sensor data foot positions
+            
+            /*
+            for (int i = 0; i < 6; i++)
+            {
+                Serial.print("Foot position ");
+                Serial.print(i);
+                Serial.print(": ");
+                Serial.print(hex_sensor_data.xPositions[i]);
+                Serial.print(", ");
+                Serial.println(hex_sensor_data.yPositions[i]);
+            }
+            */
+            
+            
+        }
+
+        else if (receiveType == RC_SETTINGS_DATA)
+        {
+            radio.read(&rc_settings_data, sizeof(rc_settings_data));
+            radio.writeAckPayload(1, &hex_settings_data, sizeof(hex_settings_data)); // load the payload for the next time
+        }
+
+        rc_last_received_time = millis();
+    }
+
+    if (millis() - rc_last_received_time > INTERVAL_MS_SIGNAL_LOST)
+        return false;
+
+    return true;
 }

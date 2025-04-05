@@ -30,4 +30,7 @@ const float distanceFromCenter = 173;
 const float distanceFromHexapodBottomToFemurJoint = 40;
 const float maxDistanceFromGround = 200;
 
-const Vector3 baseLegConfigurationPosition = Vector3(0, 220, 100);
+const Vector3 baseLegCalibrationPosition = Vector3(0, coxaLength, femurLength + tibiaLength);
+
+const int TIME_TO_STAND = 500;
+const int TIME_TO_SLEEP = 6000;

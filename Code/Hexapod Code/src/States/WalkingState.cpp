@@ -196,11 +196,11 @@ void WalkingState::init()
 void WalkingState::loop()
 {
 
-  double joy1x = map(rc_data.joyLeft_X, 0, 254, -100, 100);
-  double joy1y = map(rc_data.joyLeft_Y, 0, 254, -100, 100);
+  double joy1x = map(rc_control_data.joyLeft_X, 0, 254, -100, 100);
+  double joy1y = map(rc_control_data.joyLeft_Y, 0, 254, -100, 100);
 
-  double joy2x = map(rc_data.joyRight_X, 0, 254, -100, 100);
-  double joy2y = map(rc_data.joyRight_Y, 0, 254, -100, 100);
+  double joy2x = map(rc_control_data.joyRight_X, 0, 254, -100, 100);
+  double joy2y = map(rc_control_data.joyRight_Y, 0, 254, -100, 100);
 
   joy1TargetVector = Vector2(joy1x, joy1y);
   joy1TargetMagnitude = constrain(calculateHypotenuse(abs(joy1x), abs(joy1y)), 0, 100);
@@ -231,7 +231,7 @@ void WalkingState::loop()
   moveToPos(4, getGaitPoint(4, pushFraction));
   moveToPos(5, getGaitPoint(5, pushFraction));
 
-  print_value("leg 5 walking point", currentLegPositions[4], true);
+  //print_value("leg 5 walking point", currentLegPositions[4], true);
 
   float progressChangeAmount = (max(abs(forwardAmount), abs(turnAmount)) * speedMultiplier) * globalSpeedMultiplier;
 

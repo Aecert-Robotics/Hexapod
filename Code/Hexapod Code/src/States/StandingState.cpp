@@ -100,9 +100,7 @@ void StandingState::init()
         set3HighestLeg();
       }
     }
-  }
-
-  print_value("leg 0 standing point", currentLegPositions[0], true);
+  }  
 }
 
 void StandingState::loop()

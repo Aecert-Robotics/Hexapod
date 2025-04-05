@@ -19,6 +19,13 @@ public:
     void init() override;
 };
 
+class CalibrationState : public State
+{
+public:
+    void loop() override;
+    void init() override;
+};
+
 class SleepState : public State
 {
 public:
@@ -57,6 +64,7 @@ extern State *currentState;
 extern State *previousState;
 
 extern InitializationState *initializationState;
+extern CalibrationState *calibrationState;
 extern SleepState *sleepState;
 extern StandingState *standingState;
 extern WalkingState *walkingState;

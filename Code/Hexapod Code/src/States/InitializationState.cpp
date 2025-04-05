@@ -10,7 +10,7 @@ void InitializationState::init(){
   
   
     for (int i = 0; i < 6; i++) {
-      moveToPos(i, baseLegConfigurationPosition);
+      moveToPos(i, baseLegCalibrationPosition);
     }  
     delay(1000);
   }

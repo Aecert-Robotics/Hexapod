@@ -2,12 +2,26 @@
 
 #include "Arduino.h"
 
+#define UNPRESSED 0x1
+#define PRESSED  0x0
+#define OFF 0x1
+#define ON  0x0
+
 //------------Macros---------------//
 #define every(interval)                                                            \
   static uint32_t __every__##interval = millis();                                  \
   if (millis() - __every__##interval >= interval && (__every__##interval = millis()))
 
 //------------Vectors---------------//
+
+struct Vector2int{
+  int x;
+  int y;
+
+  Vector2int(int xVal, int yVal) : x(xVal), y(yVal) {}
+  Vector2int() : x(0), y(0) {}
+};
+
 class Vector2 {
 public:
   float x;

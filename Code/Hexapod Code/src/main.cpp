@@ -7,19 +7,24 @@
 #include "RuntimeVariables.h"
 
 InitializationState *initializationState = new InitializationState();
+CalibrationState *calibrationState = new CalibrationState();
 SleepState *sleepState = new SleepState();
 StandingState *standingState = new StandingState();
 WalkingState *walkingState = new WalkingState();
+
+
 
 State *currentState = nullptr;
 State *previousState = nullptr;
 
 unsigned long previousLoopTime = 0;
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
   attachServos();
   setupNRF();
+  loadCalibrationOffsets();
 
   currentState = initializationState;
   currentState->init();
@@ -27,51 +32,89 @@ void setup() {
   currentState = standingState;
 }
 
-void loop() {
+void loop()
+{
   unsigned long currentLoopTime = micros();
   unsigned long loopElapsedTime = currentLoopTime - previousLoopTime;
 
   // Return if the loop has not elapsed enough time
-  if (loopElapsedTime < loopPeriod)return;
-
+  if (loopElapsedTime < loopPeriod)
+    return;
 
   previousLoopTime = currentLoopTime;
 
-  receiveNRFData();
+  bool connected = receiveNRFData();
   updateRuntimeVariables();
 
-  //If the state has changed, call the init function of the new state
-  if (currentState != previousState) {
+  // If the state has changed, call the init function of the new state
+  if (currentState != previousState)
+  {
     currentState->init();
-    previousState = currentState;    
+    previousState = currentState;
   }
   currentState->loop();
 
 
-  // state manager
-  static unsigned long lastMovementTime = 0;
 
-  double joy1x = map(rc_data.joyLeft_X, 0, 254, -100, 100);
-  double joy1y = map(rc_data.joyLeft_Y, 0, 254, -100, 100);
+  //-----------------State Manager---------------------//
 
-  double joy2x = map(rc_data.joyRight_X, 0, 254, -100, 100);
-  double joy2y = map(rc_data.joyRight_Y, 0, 254, -100, 100);
+  //controller is not connected
+  if (!connected)
+  {
+    currentState = sleepState;
+    return;
+  }
 
-  bool movementDetected = abs(joy1x) > 10 || abs(joy1y) > 10 || abs(joy2x) > 10 || abs(joy2y) > 10;
 
-  if (movementDetected) {
-    lastMovementTime = millis();
-    if (currentState == sleepState) {
-      currentState = standingState;
-    } else if (currentState != walkingState) {
-      currentState = walkingState;
+  // controller is on the homepage
+  if (receiveType == RC_CONTROL_DATA)
+  {
+    static unsigned long lastMovementTime = 0;
+
+    double joy1x = map(rc_control_data.joyLeft_X, 0, 254, -100, 100);
+    double joy1y = map(rc_control_data.joyLeft_Y, 0, 254, -100, 100);
+
+    double joy2x = map(rc_control_data.joyRight_X, 0, 254, -100, 100);
+    double joy2y = map(rc_control_data.joyRight_Y, 0, 254, -100, 100);
+
+    bool movementDetected = abs(joy1x) > 10 || abs(joy1y) > 10 || abs(joy2x) > 10 || abs(joy2y) > 10;
+
+    if (movementDetected)
+    {
+      lastMovementTime = millis();
+      if (currentState == sleepState)
+        currentState = standingState;
+      else if (currentState != walkingState)
+        currentState = walkingState;
     }
-  } else {
-    unsigned long timeSinceLastMovement = millis() - lastMovementTime;
-    if (currentState != sleepState && timeSinceLastMovement >= 3000 && timeSinceLastMovement < 6000) {
-      currentState = standingState;
-    } else if (timeSinceLastMovement >= 6000 && currentState != sleepState) {
+    else
+    {
+      unsigned long timeSinceLastMovement = millis() - lastMovementTime;
+      if (currentState != sleepState && timeSinceLastMovement >= TIME_TO_STAND && timeSinceLastMovement < TIME_TO_SLEEP)
+      {
+        currentState = standingState;
+      }
+      else if (timeSinceLastMovement >= TIME_TO_SLEEP && currentState != sleepState)
+      {
+        currentState = sleepState;
+      }
+    }
+  }
+  
+
+  // controller is in the menu
+  if (receiveType == RC_SETTINGS_DATA)
+  {
+    // go to sleep state if the hexapod was not in either calibration or sleep state
+    if(currentState != calibrationState && currentState != sleepState) currentState = sleepState;
+
+    if (rc_settings_data.calibrating == 1) currentState = calibrationState; 
+
+    // finished calibrating, save offsets.
+    if (currentState == calibrationState && rc_settings_data.calibrating == 0)
+    {
+      saveCalibrationOffsets();
       currentState = sleepState;
-    }
+    } 
   }
 }
