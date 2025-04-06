@@ -28,6 +28,9 @@ void StandingState::init()
   standProgress = 0;
   memcpy(standingStartPoints, currentLegPositions, sizeof(currentLegPositions[0]) * 6);
 
+  standingEndPoint = Vector3(0, distanceFromCenter, distanceFromGround);
+  //Serial.println("Standing End Point: " + standingEndPoint.toString());
+
   // Calculate the inbetween and ending points
   for (int i = 0; i < 6; i++)
   {
@@ -47,8 +50,7 @@ void StandingState::init()
     SCPA[i][2] = standingEndPoint;
   }
 
-  standingEndPoint = Vector3(0, 180, distanceFromGround);
-  //Serial.println("Standing End Point: " + standingEndPoint.toString());
+  
 
   // standing. This takes about a second
   unsigned long previousStandLoopTime = micros(); // Add this line
@@ -105,7 +107,7 @@ void StandingState::init()
 
 void StandingState::loop()
 {
-  standingEndPoint = Vector3(0, 180, distanceFromGround);
+  standingEndPoint = Vector3(0, distanceFromCenter, distanceFromGround);
   //Serial.println("Standing End Point: " + standingEndPoint.toString());
 
   // update distance from ground constantly

@@ -9,6 +9,24 @@ extern Vector3 currentLegPositions[NUM_LEGS];
 extern int8_t calibrationOffsets[18];
 //extern Vector3 cycleStartPositions[NUM_LEGS];
 
+enum Gait
+{
+  TRI,    // 0
+  RIPPLE, // 1
+  WAVE,   // 2
+  QUAD,   // 3
+  BI,     // 4
+  HOP     // 5
+};
+
+enum LegState
+{
+  Propelling,
+  Lifting,
+  Standing,
+  Reset
+};
+
 
 Vector3 posToAngle(Vector3 pos);
 void setLegAngles(int leg, Vector3 angles);

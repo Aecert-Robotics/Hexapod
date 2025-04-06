@@ -26,11 +26,11 @@ const float TIBIA_BASE_OFFSET = 0;
 const float strideMultiplier[6] = {-1, -1, -1, 1, 1, 1};
 const float rotationMultiplier[6] = {1, 0, -1, -1, 0 , 1};
 
-const float distanceFromCenter = 173;
+const float distanceFromCenter = 140;
 const float distanceFromHexapodBottomToFemurJoint = 40;
 const float maxDistanceFromGround = 200;
 
 const Vector3 baseLegCalibrationPosition = Vector3(0, coxaLength, femurLength + tibiaLength);
 
-const int TIME_TO_STAND = 500;
-const int TIME_TO_SLEEP = 6000;
+const int TIME_TO_STAND = 300;
+const int TIME_TO_SLEEP = 12000;

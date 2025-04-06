@@ -13,16 +13,21 @@ int ControlPointsAmount = 0;
 int RotateControlPointsAmount = 0;
 float pushFraction = 3.0 / 6.0;
 float speedMultiplier = 0.5;
-float strideLengthMultiplier = 1.5;
-float liftHeight = 130;
-float maxStrideLength = 200;
+float strideLengthMultiplier = 1.2; 
+
+float liftHeight = 100;
+float liftHeightMultiplier = 1;
+
+float maxStrideLength = 190;
 float maxSpeed = 100;
+
 const float legPlacementAngle = 55;
 float landHeight = 70;
 
 int leftSlider = 50;
-float globalSpeedMultiplier = 0.1;
-float globalRotationMultiplier = 0.55;
+float globalSpeedMultiplier = 0.15;
+float globalRotationMultiplier = 0.7;
+float globalStrafeMultiplier = 0.7;
 
 Vector2 joy1TargetVector;
 float joy1TargetMagnitude;
@@ -39,26 +44,7 @@ float joy2CurrentMagnitude;
 int cycleProgress[6];
 float points = 1000;
 
-enum Gait
-{
-  TRI,    // 0
-  RIPPLE, // 1
-  WAVE,   // 2
-  QUAD,   // 3
-  BI,     // 4
-  HOP     // 5
-};
-Gait currentGait = TRI;
-Gait previousGait = TRI;
-int currentGaitID = 0;
 
-enum LegState
-{
-  Propelling,
-  Lifting,
-  Standing,
-  Reset
-};
 
 LegState legStates[6];
 
@@ -89,11 +75,11 @@ void WalkingState::init()
     cycleProgress[5] = (points / 2);
 
     pushFraction = 3.1 / 6.0;
-    speedMultiplier = 1;
-    strideLengthMultiplier = 1.2;
-    liftHeight = 140;
-    maxStrideLength = 240;
-    maxSpeed = 200;
+    speedMultiplier = 1.1;
+    strideLengthMultiplier = 1.1;
+    liftHeight = 100;
+    maxStrideLength = 180;
+    maxSpeed = 220;
     break;
 
   case WAVE:
@@ -110,7 +96,7 @@ void WalkingState::init()
 
     speedMultiplier = 0.40;
     strideLengthMultiplier = 2;
-    liftHeight = 150;
+    liftHeight = 110;
     maxStrideLength = 150;
     maxSpeed = 160;
     break;
@@ -129,7 +115,7 @@ void WalkingState::init()
 
     speedMultiplier = 1;
     strideLengthMultiplier = 1.3;
-    liftHeight = 140;
+    liftHeight = 100;
     maxStrideLength = 220;
     maxSpeed = 200;
     break;
@@ -148,7 +134,7 @@ void WalkingState::init()
 
     speedMultiplier = 4;
     strideLengthMultiplier = 1;
-    liftHeight = 200;
+    liftHeight = 160;
     maxStrideLength = 230;
     maxSpeed = 130;
     break;
@@ -167,7 +153,7 @@ void WalkingState::init()
 
     speedMultiplier = 1;
     strideLengthMultiplier = 1.2;
-    liftHeight = 140;
+    liftHeight = 100;
     maxStrideLength = 220;
     maxSpeed = 200;
     break;
@@ -186,7 +172,7 @@ void WalkingState::init()
 
     speedMultiplier = 1;
     strideLengthMultiplier = 1.6;
-    liftHeight = 220;
+    liftHeight = 170;
     maxStrideLength = 240;
     maxSpeed = 200;
     break;
@@ -195,7 +181,6 @@ void WalkingState::init()
 
 void WalkingState::loop()
 {
-
   double joy1x = map(rc_control_data.joyLeft_X, 0, 254, -100, 100);
   double joy1y = map(rc_control_data.joyLeft_Y, 0, 254, -100, 100);
 
@@ -208,11 +193,13 @@ void WalkingState::loop()
   joy2TargetVector = Vector2(joy2x, joy2y);
   joy2TargetMagnitude = constrain(calculateHypotenuse(abs(joy2x), abs(joy2y)), 0, 100);
 
-  joy1CurrentVector = lerp(joy1CurrentVector, joy1TargetVector, 0.08);
-  joy1CurrentMagnitude = lerp(joy1CurrentMagnitude, joy1TargetMagnitude, 0.08);
+  joy1CurrentVector = lerp(joy1CurrentVector, joy1TargetVector, 0.04);
+  joy1CurrentMagnitude = lerp(joy1CurrentMagnitude, joy1TargetMagnitude, 0.04);
 
-  joy2CurrentVector = lerp(joy2CurrentVector, joy2TargetVector, 0.12);
-  joy2CurrentMagnitude = lerp(joy2CurrentMagnitude, joy2TargetMagnitude, 0.12);
+  joy2CurrentVector = lerp(joy2CurrentVector, joy2TargetVector, 0.06);
+  joy2CurrentMagnitude = lerp(joy2CurrentMagnitude, joy2TargetMagnitude, 0.06);
+
+
 
   for (int i = 0; i < 6; i++)
   {
@@ -253,10 +240,9 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
 
   float rotateStrideLength = joy2CurrentVector.x * globalRotationMultiplier;  
   
-  Vector2 strafeStrideLength = joy1CurrentVector;
-  strafeStrideLength = strafeStrideLength * Vector2(1,strideLengthMultiplier);
+  Vector2 strafeStrideLength = joy1CurrentVector * globalStrafeMultiplier * strideLengthMultiplier;
   strafeStrideLength.y = constrain(strafeStrideLength.y,-maxStrideLength/2, maxStrideLength/2);
-  strafeStrideLength = strafeStrideLength * globalSpeedMultiplier * 10;
+  strafeStrideLength.x = constrain(strafeStrideLength.x,-maxStrideLength, maxStrideLength);
 
   float weightSum = abs(forwardAmount) + abs(turnAmount);
 
@@ -326,7 +312,7 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     ControlPoints[0] = cycleStartPoints[leg];
 
     //Control point directly above the starting point causing the leg to lift up quickly
-    ControlPoints[1] = cycleStartPoints[leg] + Vector3(0,0,liftHeight);
+    ControlPoints[1] = cycleStartPoints[leg] + Vector3(0,0,liftHeight*liftHeightMultiplier);
 
     //Control point directly above the ending point preventing the leg from running into the ground
     ControlPoints[2] = Vector3(
@@ -353,13 +339,13 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     RotateControlPoints[0] = cycleStartPoints[leg];
 
     //Control point directly above the starting point causing the leg to lift up quickly
-    RotateControlPoints[1] = cycleStartPoints[leg] + Vector3(0,0,liftHeight);
+    RotateControlPoints[1] = cycleStartPoints[leg] + Vector3(0,0,liftHeight*liftHeightMultiplier);
 
     //Control point at the apex of the curve and offset away from the hexapods body, cause the leg to lift up and away.
     RotateControlPoints[2] = Vector3(
       0,                              //X
       distanceFromCenter + 40,        //Y
-      distanceFromGround + liftHeight //Z
+      distanceFromGround + liftHeight*liftHeightMultiplier //Z
     );
 
     //Control point directly above the ending point preventing the leg from running into the ground
