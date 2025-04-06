@@ -9,6 +9,10 @@ void SleepState::init(){
   targetReached = false;  
 }
 
+void SleepState::exit(){
+  Serial.println("Exiting Sleep State.");
+}
+
 
 
 void SleepState::loop(){

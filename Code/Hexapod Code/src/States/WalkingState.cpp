@@ -179,6 +179,11 @@ void WalkingState::init()
   }
 }
 
+void WalkingState::exit()
+{
+  Serial.println("Exiting Walking State.");
+}
+
 void WalkingState::loop()
 {
   double joy1x = map(rc_control_data.joyLeft_X, 0, 254, -100, 100);

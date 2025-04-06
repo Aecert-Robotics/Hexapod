@@ -19,6 +19,12 @@ void CalibrationState::init()
   }
 }
 
+void CalibrationState::exit()
+{
+  Serial.println("Exiting Calibration State.");
+  saveCalibrationOffsets();
+}
+
 void CalibrationState::loop()
 {
   // move legs

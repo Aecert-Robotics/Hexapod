@@ -13,6 +13,11 @@ void InitializationState::init(){
       moveToPos(i, baseLegCalibrationPosition);
     }  
     delay(1000);
+    
+  }
+  
+  void InitializationState::exit(){
+    Serial.println("Exiting Initialization State.");
   }
 
   void InitializationState::loop(){

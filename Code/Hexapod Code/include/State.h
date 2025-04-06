@@ -10,6 +10,7 @@ class State
 public:
     virtual void init() = 0;
     virtual void loop() = 0;
+    virtual void exit() = 0;
 };
 
 class InitializationState : public State
@@ -17,6 +18,7 @@ class InitializationState : public State
 public:
     void loop() override;
     void init() override;
+    void exit() override;
 };
 
 class CalibrationState : public State
@@ -24,6 +26,7 @@ class CalibrationState : public State
 public:
     void loop() override;
     void init() override;
+    void exit() override;
 };
 
 class SleepState : public State
@@ -31,6 +34,7 @@ class SleepState : public State
 public:
     void loop() override;
     void init() override;
+    void exit() override;
 
 private:
     Vector3 target = Vector3(0, 120, -20);
@@ -42,6 +46,7 @@ class StandingState : public State
 public:
     void loop() override;
     void init() override;
+    void exit() override;
     void set3HighestLeg();
 
 private:
@@ -53,6 +58,7 @@ class WalkingState : public State
 public:
     void loop() override;
     void init() override;
+    void exit() override;
     Vector3 getGaitPoint(int leg, float pushFraction);
 
 private:

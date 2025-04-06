@@ -27,9 +27,10 @@ void setup()
   loadCalibrationOffsets();
 
   currentState = initializationState;
+  previousState = initializationState;
+  
   currentState->init();
-
-  currentState = standingState;
+  currentState = sleepState;
 }
 
 void loop()
@@ -49,6 +50,7 @@ void loop()
   // If the state has changed, call the init function of the new state
   if (currentState != previousState)
   {
+    previousState->exit();
     currentState->init();
     previousState = currentState;
   }
@@ -108,13 +110,11 @@ void loop()
     // go to sleep state if the hexapod was not in either calibration or sleep state
     if(currentState != calibrationState && currentState != sleepState) currentState = sleepState;
 
+
+    // controller has entered the calibration menu
     if (rc_settings_data.calibrating == 1) currentState = calibrationState; 
 
-    // finished calibrating, save offsets.
-    if (currentState == calibrationState && rc_settings_data.calibrating == 0)
-    {
-      saveCalibrationOffsets();
-      currentState = sleepState;
-    } 
+    // finished calibrating.
+    if (currentState == calibrationState && rc_settings_data.calibrating == 0) currentState = sleepState;
   }
 }

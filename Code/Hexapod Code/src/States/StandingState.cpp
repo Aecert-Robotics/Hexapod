@@ -105,6 +105,13 @@ void StandingState::init()
   }  
 }
 
+
+void StandingState::exit()
+{
+  Serial.println("Exiting Standing State.");
+}
+
+
 void StandingState::loop()
 {
   standingEndPoint = Vector3(0, distanceFromCenter, distanceFromGround);
