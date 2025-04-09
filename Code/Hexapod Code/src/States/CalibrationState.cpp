@@ -12,11 +12,6 @@ bool canDecrement = true;
 void CalibrationState::init()
 {
   Serial.println("Calibration State.");
-
-  for (int i = 0; i < 6; i++)
-  {
-    moveToPos(i, baseLegCalibrationPosition);
-  }
 }
 
 void CalibrationState::exit()
@@ -30,10 +25,18 @@ void CalibrationState::loop()
   // move legs
   for (int i = 0; i < 6; i++)
   {
-    float nextX = min(currentLegPositions[i].x + 5, baseLegCalibrationPosition.x);
-    float nextY = min(currentLegPositions[i].y + 5, baseLegCalibrationPosition.y);
-    float nextZ = min(currentLegPositions[i].z + 5, baseLegCalibrationPosition.z);
-    moveToPos(i, Vector3(nextX, nextY, nextZ));
+    Vector3 next = lerp(currentLegPositions[i], baseLegCalibrationPosition, 0.05);
+    //snap to the target position if close enough
+    if (abs(currentLegPositions[i].x - baseLegCalibrationPosition.x) < 1)
+      next.x = baseLegCalibrationPosition.x;
+    
+    if (abs(currentLegPositions[i].y - baseLegCalibrationPosition.y) < 1)
+      next.y = baseLegCalibrationPosition.y;
+
+    if (abs(currentLegPositions[i].z - baseLegCalibrationPosition.z) < 1)
+      next.z = baseLegCalibrationPosition.z;
+
+    moveToPos(i, next);
   }
 
   // calibrate
