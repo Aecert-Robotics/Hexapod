@@ -17,14 +17,20 @@ int standLoops = 0;
 int standProgress = 0;
 
 bool moveAllAtOnce = false;
-bool highLift = false;
+bool highLift = true;
 
 void StandingState::init()
 {
   Serial.println("Standing State.");
-  if (previousState == sleepState)
-    moveAllAtOnce = true;
+
+  if (previousState == sleepState) moveAllAtOnce = true;
+  else moveAllAtOnce = false;
+
+  if (moveAllAtOnce)Serial.println("Moving all legs at once.");
+  else Serial.println("Moving 3 legs at a time.");
+
   set3HighestLeg();
+
   standLoops = 0;
   standProgress = 0;
   memcpy(standingStartPoints, currentLegPositions, sizeof(currentLegPositions[0]) * 6);
@@ -42,7 +48,7 @@ void StandingState::init()
     inBetweenPoint.z = ((inBetweenPoint.z + standingEndPoint.z) / 2);
     if (abs(inBetweenPoint.z - standingEndPoint.z) < 50)
       inBetweenPoint.z += 70;
-    // if(highLift)inBetweenPoint.z += 80;
+    if(highLift)inBetweenPoint.z += 80;
 
     standingInBetweenPoints[i] = inBetweenPoint;
 
@@ -54,8 +60,6 @@ void StandingState::init()
     SCPA[i][1] = standingInBetweenPoints[i];
     SCPA[i][2] = standingEndPoint;
   }
-
-
 
   // standing. This takes about a second
   unsigned long previousStandLoopTime = micros(); // Add this line
@@ -78,6 +82,7 @@ void StandingState::init()
 
     if (moveAllAtOnce)
     {
+      
       for (int i = 0; i < 6; i++)
       {
         // Pass the vector directly
@@ -93,6 +98,7 @@ void StandingState::init()
 
     else
     {
+      
       for (int i = 0; i < 3; i++)
       {
         if (currentLegs[i] != -1)

@@ -8,22 +8,27 @@
 class State
 {
 public:
+    virtual const char* getStateName() const = 0;
     virtual void init() = 0;
     virtual void loop() = 0;
     virtual void exit() = 0;
+    
 };
 
 class InitializationState : public State
 {
 public:
+    const char* getStateName() const override { return "Initialization State"; }
     void loop() override;
     void init() override;
     void exit() override;
+    
 };
 
 class CalibrationState : public State
 {
 public:
+    const char* getStateName() const override { return "Calibration State"; }
     void loop() override;
     void init() override;
     void exit() override;
@@ -32,6 +37,7 @@ public:
 class SleepState : public State
 {
 public:
+    const char* getStateName() const override { return "Sleep State"; }
     void loop() override;
     void init() override;
     void exit() override;
@@ -44,6 +50,7 @@ private:
 class StandingState : public State
 {
 public:
+    const char* getStateName() const override { return "Standing State"; }
     void loop() override;
     void init() override;
     void exit() override;
@@ -56,6 +63,7 @@ private:
 class WalkingState : public State
 {
 public:
+    const char* getStateName() const override { return "Walking State"; }
     void loop() override;
     void init() override;
     void exit() override;
