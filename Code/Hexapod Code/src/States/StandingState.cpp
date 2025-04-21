@@ -12,31 +12,30 @@ Vector3 standingStartPoints[6];     // the points the legs are at in the beginni
 Vector3 standingInBetweenPoints[6]; // the middle points of the bezier curves that the legs will follow to smoothly transition to the end points
 Vector3 standingEndPoint;
 
-int legAdjustOrder[6] = {-1, -1, -1, -1, -1, -1}; // the order in which the legs will be adjusted to stand
-int standLoops = 0;
-int standProgress = 0;
+int legAdjustOrder[6] = {1, 2, 3, 4, 5, 6}; // the order in which the legs will be adjusted to stand
+int standProgress[6] = {0, 0, 0, 0, 0, 0};
+int legAdjustTimeOffset = 120;
 
 bool moveAllAtOnce = false;
-bool highLift = true;
 
 void StandingState::init()
 {
   Serial.println("Standing State.");
 
-  if (previousState == sleepState) moveAllAtOnce = true;
-  else moveAllAtOnce = false;
-
-  if (moveAllAtOnce)Serial.println("Moving all legs at once.");
-  else Serial.println("Moving 1 leg at a time.");
+  if (previousState == sleepState){
+    moveAllAtOnce = true;
+    Serial.println("Moving all at once.");
+  }
+  else if (previousState == walkingState)
+  {
+    moveAllAtOnce = false;
+    Serial.println("Moving one at a time.");
+  }
 
   calculateLegAdjustOrder();
 
-  standLoops = 0;
-  standProgress = 0;
   memcpy(standingStartPoints, currentLegPositions, sizeof(currentLegPositions[0]) * 6);
-
   standingEndPoint = Vector3(0, distanceFromCenter, distanceFromGround);
-  //Serial.println("Standing End Point: " + standingEndPoint.toString());
 
   // Calculate the inbetween and ending points
   for (int i = 0; i < 6; i++)
@@ -47,108 +46,102 @@ void StandingState::init()
 
     inBetweenPoint.z = ((inBetweenPoint.z + standingEndPoint.z) / 2);
     if (abs(inBetweenPoint.z - standingEndPoint.z) < 50)
-      inBetweenPoint.z += 70;
-    //if(highLift)inBetweenPoint.z += 80;
+      inBetweenPoint.z += 60;
 
     standingInBetweenPoints[i] = inBetweenPoint;
 
-    // Resize the inner vector if necessary (should be 3 points: start, middle, end)
-    if (SCPA[i].size() != 3) {
-        SCPA[i].resize(3);
-    }
     SCPA[i][0] = standingStartPoints[i];
     SCPA[i][1] = standingInBetweenPoints[i];
     SCPA[i][2] = standingEndPoint;
   }
 
-  // standing. This takes about a second
-  unsigned long previousStandLoopTime = micros(); // Add this line
+  unsigned long standingStartTime = millis();
 
-  while (standLoops < 6)
+  bool adjusting = true;
+  for (int i = 0; i < 6; i++)
   {
-    unsigned long currentStandLoopTime = micros(); // Add this line
-    unsigned long standLoopElapsedTime = currentStandLoopTime - previousStandLoopTime; // Add this line
-
-    if (standLoopElapsedTime < loopPeriod) continue; // Add this line
-
-    previousStandLoopTime = currentStandLoopTime; // Add this line
-
-    standProgress += 20;
-    if (!moveAllAtOnce) standProgress += 40;
-    float t = (float)standProgress / points;
-    if (t > 1)
+    standProgress[i] = 0;
+  }
+  while (adjusting)
+  {
+    // only run every loopPeriod milliseconds
+    unsigned long loopPeriodMs = loopPeriod / 1000;
+    every(loopPeriodMs)
     {
-      t = 1;
-    }
-
-    if (moveAllAtOnce)
-    {
-      
+      unsigned long currentTime = millis();
+      // iterate over all legs
       for (int i = 0; i < 6; i++)
       {
-        // Pass the vector directly
-        moveToPos(i, GetPointOnBezierCurve(SCPA[i], t));
+
+        int currentLeg = legAdjustOrder[i];
+
+        // check if the leg is already adjusted
+        if (standProgress[currentLeg] >= points)
+          continue;
+
+        // moveAllAtOnce == TRUE: adjust all of the legs at the same time
+        if (moveAllAtOnce)
+        {
+          standProgress[currentLeg] += 10;
+        }
+
+        // moveAllAtOnce == FALSE: offset the adjustment of the legs by the legAdjustTimeOffset
+        else if (currentTime - standingStartTime >= i * legAdjustTimeOffset)
+        {
+          standProgress[currentLeg] += 30;
+        }
+
+        // move to the next point in the bezier curve
+        float t = (float)standProgress[currentLeg] / points;
+        if (t > 1)
+          t = 1;
+        moveToPos(currentLeg, GetPointOnBezierCurve(SCPA[currentLeg], t));
       }
 
-      if (standProgress > points)
+      // check if all legs are done moving
+      adjusting = false;
+      for (int i = 0; i < 6; i++)
       {
-        standProgress = 0;
-        break;
-      }
-    }
-
-    else
-    {
-      
-      moveToPos(legAdjustOrder[standLoops], GetPointOnBezierCurve(SCPA[legAdjustOrder[standLoops]], t));
-
-      if (standProgress > points)
-      {
-        standProgress = 0;
-        standLoops++;
+        if (standProgress[i] < points)
+        {
+          adjusting = true;
+          break;
+        }
       }
     }
   }
 }
-
 
 void StandingState::exit()
 {
   Serial.println("Exiting Standing State.");
 }
 
-
 void StandingState::loop()
 {
   standingEndPoint = Vector3(0, distanceFromCenter, distanceFromGround);
-  //Serial.println("Standing End Point: " + standingEndPoint.toString());
+  // Serial.println("Standing End Point: " + standingEndPoint.toString());
 
   // update distance from ground constantly
-  for (int i = 0; i < 6; i++) SCPA[i][2] = standingEndPoint; // Update the end point in the vector
+  for (int i = 0; i < 6; i++)
+    SCPA[i][2] = standingEndPoint; // Update the end point in the vector
 
   // constantly move to the standing end position
   // Pass the vector directly, t=1 means the end point
-  for (int i = 0; i < 6; i++) moveToPos(i, GetPointOnBezierCurve(SCPA[i], 1.0f));
+  for (int i = 0; i < 6; i++)
+    moveToPos(i, GetPointOnBezierCurve(SCPA[i], 1.0f));
   return;
 }
 
 void StandingState::calculateLegAdjustOrder()
 {
-    // Fill with indices 0..5
-    for (int i = 0; i < 6; i++) {
-        legAdjustOrder[i] = i;
-    }
+  // Fill with indices 0..5
+  for (int i = 0; i < 6; i++)
+  {
+    legAdjustOrder[i] = i;
+  }
 
-    // Sort indices by z value, highest first
-    std::sort(legAdjustOrder, legAdjustOrder + 6, [](int a, int b) {
-        return currentLegPositions[a].z > currentLegPositions[b].z;
-    });
-
-    // Print out the order
-    Serial.print("Leg Adjust Order: ");
-    for (int i = 0; i < 6; i++) {
-        Serial.print(legAdjustOrder[i]);
-        Serial.print(" ");
-    }
-    Serial.println();
+  // Sort indices by z value, highest first
+  std::sort(legAdjustOrder, legAdjustOrder + 6, [](int a, int b)
+            { return currentLegPositions[a].z > currentLegPositions[b].z; });
 }

@@ -12,13 +12,6 @@ float turnAmount;
 float tArray[6];
 
 
-float landHeight = 70;
-
-float globalSpeedMult = 0.5;
-float globalRotationStrideLengthMult = 0.7;
-float globalStrafeStrideLengthMult = 0.7;
-float globalLiftHeightMult = 1;
-
 Vector2 joy1TargetVector;
 float joy1TargetMagnitude;
 
@@ -147,9 +140,9 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
 
     //Middle point of the curve
     rotateControlPoints[1] = Vector3(
-      0,                        //X
-      distanceFromCenter + 0,  //Y 
-      distanceFromGround        //Z
+      0,                    //X
+      distanceFromCenter,   //Y 
+      distanceFromGround    //Z
     );
 
     //Ending point of the curve
@@ -184,7 +177,7 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     strafeControlPoints[2] = Vector3(
       -strafeStrideLength.y * strideMultiplier[leg],                      //X
       strafeStrideLength.x * strideMultiplier[leg] + distanceFromCenter,  //Y
-      distanceFromGround + landHeight                                     //Z                          
+      distanceFromGround + legLandHeight                                     //Z                          
     ).rotate(legPlacementAngle * rotationMultiplier[leg], Vector2(0,distanceFromCenter));
 
     //Ending point of the curve
@@ -210,7 +203,7 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     //Control point at the apex of the curve and offset away from the hexapods body, cause the leg to lift up and away.
     rotateControlPoints[2] = Vector3(
       0,                              //X
-      distanceFromCenter + 0,        //Y
+      distanceFromCenter,             //Y
       distanceFromGround + cGait.liftHeight * globalLiftHeightMult //Z
     );
 
@@ -218,7 +211,7 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     rotateControlPoints[3] = Vector3(
       -rotateStrideLength,            //X
       distanceFromCenter,             //Y
-      distanceFromGround + landHeight //Z
+      distanceFromGround + legLandHeight //Z
     );
 
     //Ending point of the curve

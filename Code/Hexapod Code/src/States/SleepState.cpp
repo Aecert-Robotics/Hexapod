@@ -24,7 +24,7 @@ void SleepState::loop(){
 
   targetReached = true;
   for (int i = 0; i < 6; i++) {
-    Vector3 next = lerp(currentLegPositions[i], target, 0.03);
+    Vector3 next = lerp(currentLegPositions[i], target, 0.02);
 
     //snap to the target position if close enough
     if(abs(currentLegPositions[i].x - target.x) < 1) next.x = target.x;
