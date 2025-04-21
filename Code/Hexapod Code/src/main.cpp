@@ -11,6 +11,7 @@ CalibrationState *calibrationState = new CalibrationState();
 SleepState *sleepState = new SleepState();
 StandingState *standingState = new StandingState();
 WalkingState *walkingState = new WalkingState();
+GyroState *gyroState = new GyroState();
 
 State *currentState = nullptr;
 State *previousState = nullptr;
@@ -98,6 +99,19 @@ void loop()
       {
         currentState = sleepState;
       }
+    }
+
+    // if bumper A is pressed, go into gyro state
+    if(rc_control_data.bumper_A == PRESSED)
+    {
+      if(currentState == gyroState) return; // do nothing if already in gyro state
+
+      //if you are entering gyro state for the first time, go into standing state first
+      // Note that when going into standing state, the hexapod will fully stand before moving on.
+      if(currentState != standingState) currentState = standingState;
+
+      //if you are already in standing state, go into gyro state.      
+      else currentState = gyroState;           
     }
   }
   

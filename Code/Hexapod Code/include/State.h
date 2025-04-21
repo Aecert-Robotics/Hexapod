@@ -73,6 +73,15 @@ private:
     int points = 1000;
 };
 
+class GyroState : public State
+{
+public:
+    const char* getStateName() const override { return "Gyro State"; }
+    void loop() override;
+    void init() override;
+    void exit() override;
+};
+
 
 extern State *currentState;
 extern State *previousState;
@@ -82,3 +91,4 @@ extern CalibrationState *calibrationState;
 extern SleepState *sleepState;
 extern StandingState *standingState;
 extern WalkingState *walkingState;
+extern GyroState *gyroState;
