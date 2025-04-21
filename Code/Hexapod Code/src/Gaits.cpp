@@ -96,11 +96,11 @@ Gait hopGait = Gait(
         0.0f, // leg 5 offset
         0.0f  // leg 6 offset
     },
-    0.7f,  // pushFraction (example value)
+    0.55f,  // pushFraction (example value)
     1.1f,   // gaitSpeedMult
     1.4f,   // strideLengthMult
     80.0f, // liftHeight
-    200.0f  // maxStrideLength
+    225.0f  // maxStrideLength
 );
 
 
