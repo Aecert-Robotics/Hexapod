@@ -54,7 +54,7 @@ public:
     void loop() override;
     void init() override;
     void exit() override;
-    void set3HighestLeg();
+    void calculateLegAdjustOrder();
 
 private:
     int points = 1000;

@@ -148,7 +148,7 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     //Middle point of the curve
     rotateControlPoints[1] = Vector3(
       0,                        //X
-      distanceFromCenter + 40,  //Y 
+      distanceFromCenter + 0,  //Y 
       distanceFromGround        //Z
     );
 
@@ -210,7 +210,7 @@ Vector3 WalkingState::getGaitPoint(int leg, float pushFraction){
     //Control point at the apex of the curve and offset away from the hexapods body, cause the leg to lift up and away.
     rotateControlPoints[2] = Vector3(
       0,                              //X
-      distanceFromCenter + 40,        //Y
+      distanceFromCenter + 0,        //Y
       distanceFromGround + cGait.liftHeight * globalLiftHeightMult //Z
     );
 
