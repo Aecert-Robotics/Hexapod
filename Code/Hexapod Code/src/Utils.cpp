@@ -154,26 +154,30 @@ float Vector3::distanceTo(Vector3 v) {
 
 //------------Bezier Curves---------------//
 
-Vector2 GetPointOnBezierCurve(Vector2* points, int numPoints, float t) {
+Vector2 GetPointOnBezierCurve(vector<Vector2>& controlPoints, float t) {
   Vector2 pos;
+  int totalPoints = controlPoints.size(); //total number of control points
+  if (totalPoints == 0) return pos; // Return zero vector if no points are provided
 
-  for (int i = 0; i < numPoints; i++) {
-    float b = binomialCoefficient(numPoints - 1, i) * pow(1 - t, numPoints - 1 - i) * pow(t, i);
-    pos.x += b * points[i].x;
-    pos.y += b * points[i].y;
+  for (int i = 0; i < totalPoints; i++) {
+    float b = binomialCoefficient(totalPoints - 1, i) * pow(1 - t, totalPoints - 1 - i) * pow(t, i);
+    pos.x += b * controlPoints[i].x;
+    pos.y += b * controlPoints[i].y;
   }
 
   return pos;
 }
 
-Vector3 GetPointOnBezierCurve(Vector3* points, int numPoints, float t) {
+Vector3 GetPointOnBezierCurve(vector<Vector3>& controlPoints, float t) {
   Vector3 pos;
+  int totalPoints = controlPoints.size(); //total number of control points
+  if (totalPoints == 0) return pos; // Return zero vector if no points are provided
 
-  for (int i = 0; i < numPoints; i++) {
-    float b = binomialCoefficient(numPoints - 1, i) * pow(1 - t, numPoints - 1 - i) * pow(t, i);
-    pos.x += b * points[i].x;
-    pos.y += b * points[i].y;
-    pos.z += b * points[i].z;
+  for (int i = 0; i < totalPoints; i++) {
+    float b = binomialCoefficient(totalPoints - 1, i) * pow(1 - t, totalPoints - 1 - i) * pow(t, i);
+    pos.x += b * controlPoints[i].x;
+    pos.y += b * controlPoints[i].y;
+    pos.z += b * controlPoints[i].z;
   }
 
   return pos;

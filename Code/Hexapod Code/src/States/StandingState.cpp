@@ -3,9 +3,10 @@
 #include "LegManager.h"
 #include "NRF.h"
 #include "RuntimeVariables.h"
+#include <vector> // Include the vector header
 
-// Standing Control Points Array
-Vector3 SCPA[6][10];
+// Standing Control Points Array - Changed to a vector of vectors
+vector<vector<Vector3>> SCPA(6, vector<Vector3>(3));
 
 Vector3 standingStartPoints[6];     // the points the legs are at in the beginning of the standing state
 Vector3 standingInBetweenPoints[6]; // the middle points of the bezier curves that the legs will follow to smoothly transition to the end points
@@ -45,12 +46,16 @@ void StandingState::init()
 
     standingInBetweenPoints[i] = inBetweenPoint;
 
+    // Resize the inner vector if necessary (should be 3 points: start, middle, end)
+    if (SCPA[i].size() != 3) {
+        SCPA[i].resize(3);
+    }
     SCPA[i][0] = standingStartPoints[i];
     SCPA[i][1] = standingInBetweenPoints[i];
     SCPA[i][2] = standingEndPoint;
   }
 
-  
+
 
   // standing. This takes about a second
   unsigned long previousStandLoopTime = micros(); // Add this line
@@ -75,7 +80,8 @@ void StandingState::init()
     {
       for (int i = 0; i < 6; i++)
       {
-        moveToPos(i, GetPointOnBezierCurve(SCPA[i], 3, t));
+        // Pass the vector directly
+        moveToPos(i, GetPointOnBezierCurve(SCPA[i], t));
       }
 
       if (standProgress > points)
@@ -91,7 +97,8 @@ void StandingState::init()
       {
         if (currentLegs[i] != -1)
         {
-          moveToPos(currentLegs[i], GetPointOnBezierCurve(SCPA[currentLegs[i]], 3, t));
+          // Pass the vector directly
+          moveToPos(currentLegs[i], GetPointOnBezierCurve(SCPA[currentLegs[i]], t));
         }
       }
 
@@ -102,7 +109,7 @@ void StandingState::init()
         set3HighestLeg();
       }
     }
-  }  
+  }
 }
 
 
@@ -118,10 +125,11 @@ void StandingState::loop()
   //Serial.println("Standing End Point: " + standingEndPoint.toString());
 
   // update distance from ground constantly
-  for (int i = 0; i < 6; i++) SCPA[i][2] = standingEndPoint;
+  for (int i = 0; i < 6; i++) SCPA[i][2] = standingEndPoint; // Update the end point in the vector
 
   // constantly move to the standing end position
-  for (int i = 0; i < 6; i++) moveToPos(i, GetPointOnBezierCurve(SCPA[i], 3, 1));
+  // Pass the vector directly, t=1 means the end point
+  for (int i = 0; i < 6; i++) moveToPos(i, GetPointOnBezierCurve(SCPA[i], 1.0f));
   return;
 }
 
@@ -140,7 +148,8 @@ void StandingState::set3HighestLeg()
         continue;
 
       // if the leg is already in position, dont add it
-      if (currentLegPositions[i] == standingEndPoint)
+      // Compare with the end point stored in the vector
+      if (currentLegPositions[i] == SCPA[i][2])
         continue;
 
       // if the legs z is greater than the leg already there, add it

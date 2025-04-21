@@ -12,8 +12,6 @@ SleepState *sleepState = new SleepState();
 StandingState *standingState = new StandingState();
 WalkingState *walkingState = new WalkingState();
 
-
-
 State *currentState = nullptr;
 State *previousState = nullptr;
 

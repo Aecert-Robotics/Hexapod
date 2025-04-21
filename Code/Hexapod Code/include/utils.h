@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Arduino.h"
+#include <vector>
+using std::vector;
 
 #define UNPRESSED 0x1
 #define PRESSED  0x0
@@ -67,8 +69,8 @@ public:
 };
 
 //------------Bezier Curves---------------//
-Vector2 GetPointOnBezierCurve(Vector2* points, int numPoints, float t);
-Vector3 GetPointOnBezierCurve(Vector3* points, int numPoints, float t);
+Vector2 GetPointOnBezierCurve(vector<Vector2>& controlPoints, float t);
+Vector3 GetPointOnBezierCurve(vector<Vector3>& controlPoints, float t);
 int binomialCoefficient(int n, int k);
 
 //------------LERPs---------------//

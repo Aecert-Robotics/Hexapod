@@ -75,47 +75,16 @@ void saveCalibrationOffsets()
     {
         EEPROM.put(i * sizeof(int8_t), calibrationOffsets[i]);
     }
-    Serial.println("calibrationOffsets saved to EEPROM.");
-    printCalibrationOffsets();
+    Serial.println("Calibration Offsets saved to EEPROM.");
 }
 
 void loadCalibrationOffsets()
 {
-    Serial.println("calibrationOffsets loaded from EEPROM.");
+    Serial.println("Calibration Offsets loaded from EEPROM.");
     for (int i = 0; i < 18; i++)
     {
         int8_t val;
         EEPROM.get(i * sizeof(int8_t), val);
         calibrationOffsets[i] = val;
     }
-    printCalibrationOffsets();
-}
-
-void printCalibrationOffsets()
-{
-  
-  Serial.print("Raw Offsets: ");
-  for (int i = 0; i < 18; i++)
-  {
-
-    Serial.print(calibrationOffsets[i]);
-    if (i < 17)
-    {
-      Serial.print(" ");
-    }
-  }
-  Serial.println();
-
-  Serial.print("EEPROM: ");
-  for (int i = 0; i < 18; i++)
-  {
-    int8_t val;
-    EEPROM.get(i * sizeof(int8_t), val);
-    Serial.print(val);
-    if (i < 17)
-    {
-      Serial.print(" ");
-    }
-  }
-  Serial.println();
 }

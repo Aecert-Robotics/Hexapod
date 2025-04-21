@@ -3,10 +3,9 @@
 #include "LegManager.h"
 #include "NRF.h"
 #include "Config.h"
+#include "Gaits.h"
 
 extern float distanceFromGround;
 extern bool gyroTilt;
-extern Gait currentGait;
-extern Gait previousGait;
-
+extern Gait cGait; // Current Gait Data Object
 void updateRuntimeVariables();
