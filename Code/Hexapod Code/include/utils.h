@@ -68,6 +68,22 @@ public:
   float distanceTo(Vector3 v);
 };
 
+//------------Matrix 3x3---------------//
+struct Matrix3x3 {
+  float m[3][3];
+
+  Vector3 operator*(const Vector3& v) const {
+    return {
+      m[0][0]*v.x + m[0][1]*v.y + m[0][2]*v.z,
+      m[1][0]*v.x + m[1][1]*v.y + m[1][2]*v.z,
+      m[2][0]*v.x + m[2][1]*v.y + m[2][2]*v.z
+    };
+  }
+};
+
+Matrix3x3 makeRotationMatrix(float roll, float pitch, float yaw);
+void printMatrix(const Matrix3x3& m);
+
 //------------Bezier Curves---------------//
 Vector2 GetPointOnBezierCurve(vector<Vector2>& controlPoints, float t);
 Vector3 GetPointOnBezierCurve(vector<Vector3>& controlPoints, float t);
@@ -84,5 +100,7 @@ float mapFloat(float x, float in_min, float in_max, float out_min, float out_max
 
 void print_value(String name, float value, bool newLine);
 void print_value(String name, String value, bool newLine);
+void print_value(String name, Vector2 value, bool newLine);
 void print_value(String name, Vector3 value, bool newLine);
+
 

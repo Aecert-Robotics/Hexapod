@@ -71,6 +71,17 @@ public:
 
 private:
     int points = 1000;
+    Vector2 joy1TargetVector;
+    float joy1TargetMagnitude;
+
+    Vector2 joy1CurrentVector;
+    float joy1CurrentMagnitude;
+
+    Vector2 joy2TargetVector;
+    float joy2TargetMagnitude;
+
+    Vector2 joy2CurrentVector;
+    float joy2CurrentMagnitude;
 };
 
 class GyroState : public State
@@ -80,6 +91,39 @@ public:
     void loop() override;
     void init() override;
     void exit() override;
+
+private:
+    Vector2 joy1TargetVector;
+    Vector2 joy1CurrentVector;
+
+    Vector2 joy2TargetVector;
+    Vector2 joy2CurrentVector;
+
+    Vector2 gyroTargetVector;
+    Vector2 gyroCurrentVector;
+
+    Vector3 basePoints[6];
+};
+
+class GyroStateFixed : public State
+{
+public:
+    const char* getStateName() const override { return "Gyro State Fixed"; }
+    void loop() override;
+    void init() override;
+    void exit() override;
+
+private:
+    Vector2 joy1TargetVector;
+    Vector2 joy1CurrentVector;
+
+    Vector2 joy2TargetVector;
+    Vector2 joy2CurrentVector;
+
+    Vector2 gyroTargetVector;
+    Vector2 gyroCurrentVector;
+
+    Vector3 basePoints[6];
 };
 
 
@@ -92,3 +136,4 @@ extern SleepState *sleepState;
 extern StandingState *standingState;
 extern WalkingState *walkingState;
 extern GyroState *gyroState;
+extern GyroStateFixed *gyroStateFixed;

@@ -11,26 +11,10 @@ float forwardAmount;
 float turnAmount;
 float tArray[6];
 
-
-Vector2 joy1TargetVector;
-float joy1TargetMagnitude;
-
-Vector2 joy1CurrentVector;
-float joy1CurrentMagnitude;
-
-Vector2 joy2TargetVector;
-float joy2TargetMagnitude;
-
-Vector2 joy2CurrentVector;
-float joy2CurrentMagnitude;
-
 int cycleProgress[6];
-float points = 1000;
 
 LegState legStates[6];
 Vector3 cycleStartPoints[6];
-
-
 
 void WalkingState::init()
 {

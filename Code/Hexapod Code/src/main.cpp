@@ -12,6 +12,7 @@ SleepState *sleepState = new SleepState();
 StandingState *standingState = new StandingState();
 WalkingState *walkingState = new WalkingState();
 GyroState *gyroState = new GyroState();
+GyroStateFixed *gyroStateFixed = new GyroStateFixed();
 
 State *currentState = nullptr;
 State *previousState = nullptr;
@@ -80,7 +81,30 @@ void loop()
 
     bool movementDetected = abs(joy1x) > 10 || abs(joy1y) > 10 || abs(joy2x) > 10 || abs(joy2y) > 10;
 
-    if (movementDetected)
+    // if bumper A is pressed, go into gyro state
+    if(rc_control_data.bumper_A == PRESSED)
+    {
+      lastMovementTime = millis();
+
+      if(currentState == gyroState) return;
+
+      if(currentState != standingState) currentState = standingState;   
+      else currentState = gyroState;           
+    }
+
+    // if bumper A is pressed, go into gyro state
+    else if(rc_control_data.bumper_C == PRESSED)
+    {
+      lastMovementTime = millis();
+      
+      if(currentState == gyroStateFixed) return;
+
+      if(currentState != standingState) currentState = standingState;   
+      else currentState = gyroStateFixed;           
+    }
+
+    //if you are moving the joystick, go into walking state
+    else if (movementDetected)
     {
       lastMovementTime = millis();
       if (currentState == sleepState)
@@ -88,6 +112,8 @@ void loop()
       else if (currentState != walkingState)
         currentState = walkingState;
     }
+
+    //otherwise, stand and then sleep
     else
     {
       unsigned long timeSinceLastMovement = millis() - lastMovementTime;
@@ -99,20 +125,7 @@ void loop()
       {
         currentState = sleepState;
       }
-    }
-
-    // if bumper A is pressed, go into gyro state
-    if(rc_control_data.bumper_A == PRESSED)
-    {
-      if(currentState == gyroState) return; // do nothing if already in gyro state
-
-      //if you are entering gyro state for the first time, go into standing state first
-      // Note that when going into standing state, the hexapod will fully stand before moving on.
-      if(currentState != standingState) currentState = standingState;
-
-      //if you are already in standing state, go into gyro state.      
-      else currentState = gyroState;           
-    }
+    }    
   }
   
 

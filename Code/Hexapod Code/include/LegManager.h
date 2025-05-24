@@ -25,3 +25,5 @@ void attachServos();
 void saveCalibrationOffsets();
 void loadCalibrationOffsets();
 void printCalibrationOffsets();
+Vector3 convertLocalLegPointToGlobal(Vector3 localLegPoint, int legIndex);
+Vector3 convertGlobalLegPointToLocal(Vector3 globalLegPoint, int legIndex);

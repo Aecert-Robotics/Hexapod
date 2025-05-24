@@ -25,6 +25,14 @@ const float TIBIA_BASE_OFFSET = 0;
 
 const float strideMultiplier[6] = {-1, -1, -1, 1, 1, 1};
 const float rotationMultiplier[6] = {1, 0, -1, 1, 0 , -1};
+const float globalLegPlacementRadians[6] = {
+    125.0 * DEG_TO_RAD, // Leg 0: Front Left
+    180.0 * DEG_TO_RAD, // Leg 1: Middle Left
+    235.0 * DEG_TO_RAD, // Leg 2: Back Left
+    305.0 * DEG_TO_RAD, // Leg 3: Back Right
+    0.0   * DEG_TO_RAD, // Leg 4: Middle Right
+    55.0  * DEG_TO_RAD  // Leg 5: Front Right
+};
 
 const float distanceFromCenter = 140;
 const float distanceFromHexapodBottomToFemurJoint = 40;
@@ -34,7 +42,7 @@ const float legPlacementAngle = 55;
 
 const float globalSpeedMult = 0.25;
 const float globalRotationStrideLengthMult = 0.8;
-const float globalStrafeStrideLengthMult = 0.7;
+const float globalStrafeStrideLengthMult = 0.8;
 const float globalLiftHeightMult = 0.85;
 
 const Vector3 baseLegCalibrationPosition = Vector3(0, coxaLength, femurLength + tibiaLength);

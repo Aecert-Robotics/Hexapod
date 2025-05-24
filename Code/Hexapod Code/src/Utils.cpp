@@ -152,6 +152,37 @@ float Vector3::distanceTo(Vector3 v) {
   return sqrt(dx * dx + dy * dy + dz * dz);
 }
 
+//------------Matrix 3x3---------------//
+
+Matrix3x3 makeRotationMatrix(float roll, float pitch, float yaw) {
+  float cx = cos(roll), sx = sin(roll);
+  float cy = cos(pitch), sy = sin(pitch);
+  float cz = cos(yaw), sz = sin(yaw);
+
+  Matrix3x3 R;
+  R.m[0][0] = cz * cy;
+  R.m[0][1] = cz * sy * sx - sz * cx;
+  R.m[0][2] = cz * sy * cx + sz * sx;
+  R.m[1][0] = sz * cy;
+  R.m[1][1] = sz * sy * sx + cz * cx;
+  R.m[1][2] = sz * sy * cx - cz * sx;
+  R.m[2][0] = -sy;
+  R.m[2][1] = cy * sx;
+  R.m[2][2] = cy * cx;
+  return R;
+}
+
+void printMatrix(const Matrix3x3& m) {
+  Serial.println("Rotation Matrix:");
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      Serial.print(m.m[i][j], 4); // Print with 4 decimal places
+      Serial.print("\t");
+    }
+    Serial.println();
+  }
+}
+
 //------------Bezier Curves---------------//
 
 Vector2 GetPointOnBezierCurve(vector<Vector2>& controlPoints, float t) {
@@ -233,8 +264,15 @@ void print_value(String name, String value, bool newLine){
   else Serial.print(value);
 }
 
+void print_value(String name, Vector2 value, bool newLine){
+  Serial.print(name + ": ");
+  if(newLine)Serial.println(value.toString());
+  else Serial.print(value.toString());
+}
+
 void print_value(String name, Vector3 value, bool newLine){
   Serial.print(name + ": ");
   if(newLine)Serial.println(value.toString());
   else Serial.print(value.toString());
 }
+

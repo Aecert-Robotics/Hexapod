@@ -88,3 +88,72 @@ void loadCalibrationOffsets()
         calibrationOffsets[i] = val;
     }
 }
+
+Vector3 convertLocalLegPointToGlobal(Vector3 localLegPoint, int legIndex)
+{
+    // Assumes globalLegPlacementRadians are angles CCW from Global +X (Right)
+    // Assumes Local Frame: +x Left (relative to leg), +y Outward (along leg)
+    // Assumes Global Frame: +X Right, +Y Forward
+
+    float distanceFromCenterToLegBase = 110;
+    if (legIndex == 1 || legIndex == 4)
+    {
+        distanceFromCenterToLegBase = 95;
+    }
+    // Angle relative to Global +X (Right)
+    float theta = globalLegPlacementRadians[legIndex];
+    float cosTheta = cos(theta);
+    float sinTheta = sin(theta);
+
+    // 1. Calculate base position using standard polar to Cartesian
+    float baseX = distanceFromCenterToLegBase * cosTheta;
+    float baseY = distanceFromCenterToLegBase * sinTheta;
+
+    // 2. Transform local point to global frame offset
+    // Global offset = localX * (Unit vector for local +x) + localY * (Unit vector for local +y)
+    // Unit vector for local +y (Outward) is (cosTheta, sinTheta)
+    // Unit vector for local +x (Left) is (-sinTheta, cosTheta)
+    float rotatedRelX = localLegPoint.x * (-sinTheta) + localLegPoint.y * cosTheta;
+    float rotatedRelY = localLegPoint.x * cosTheta + localLegPoint.y * sinTheta;
+
+    // 3. Add base position to the rotated local offset
+    float globalX = baseX + rotatedRelX;
+    float globalY = baseY + rotatedRelY;
+    float globalZ = localLegPoint.z; // Z remains the same
+
+    return Vector3(globalX, globalY, globalZ);
+}
+
+Vector3 convertGlobalLegPointToLocal(Vector3 globalPoint, int legIndex)
+{
+    // Assumes globalLegPlacementRadians are angles CCW from Global +X (Right)
+    // Assumes Local Frame: +x Left (relative to leg), +y Outward (along leg)
+    // Assumes Global Frame: +X Right, +Y Forward
+
+    float distanceFromCenterToLegBase = 110;
+    if (legIndex == 1 || legIndex == 4)
+    {
+        distanceFromCenterToLegBase = 95;
+    }
+    // Angle relative to Global +X (Right)
+    float theta = globalLegPlacementRadians[legIndex];
+    float cosTheta = cos(theta);
+    float sinTheta = sin(theta);
+
+    // 1. Calculate base position
+    float baseX = distanceFromCenterToLegBase * cosTheta;
+    float baseY = distanceFromCenterToLegBase * sinTheta;
+
+    // 2. Calculate vector from base to global point in global frame
+    float relX_global = globalPoint.x - baseX;
+    float relY_global = globalPoint.y - baseY;
+
+    // 3. Project the relative global vector onto the local axes
+    // localX = Dot product of rel_global with local +x unit vector (-sin, cos)
+    // localY = Dot product of rel_global with local +y unit vector (cos, sin)
+    float localX = relX_global * (-sinTheta) + relY_global * cosTheta;
+    float localY = relX_global * cosTheta + relY_global * sinTheta;
+    float localZ = globalPoint.z; // Z remains the same
+
+    return Vector3(localX, localY, localZ);
+}

@@ -26,7 +26,7 @@ void StandingState::init()
     moveAllAtOnce = true;
     Serial.println("Moving all at once.");
   }
-  else if (previousState == walkingState)
+  else
   {
     moveAllAtOnce = false;
     Serial.println("Moving one at a time.");
